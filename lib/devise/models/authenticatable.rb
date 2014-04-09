@@ -205,7 +205,7 @@ module Devise
         end
 
         def serialize_from_session(key, salt)
-          record = to_adapter.get(key)
+          record = to_adapter.get(key.to_s)  # davyfitz fix for mongoid 10068 error
           record if record && record.authenticatable_salt == salt
         end
 
