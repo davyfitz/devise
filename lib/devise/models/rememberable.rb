@@ -109,7 +109,7 @@ module Devise
 
         # Recreate the user based on the stored cookie
         def serialize_from_cookie(id, remember_token)
-          record = to_adapter.get(id)
+          record = to_adapter.get(id.to_s)
           record if record && !record.remember_expired? &&
                     Devise.secure_compare(record.rememberable_value, remember_token)
         end
