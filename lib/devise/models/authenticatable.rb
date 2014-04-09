@@ -205,6 +205,9 @@ module Devise
         end
 
         def serialize_from_session(key, salt)
+          if key.is_a?(Array)  # Its in the form [{"$oid"=>"5345639a44617635ab010000"}]
+            key = key[0].values[0]
+          end
           record = to_adapter.get(key.to_s)  # davyfitz fix for mongoid 10068 error
           record if record && record.authenticatable_salt == salt
         end

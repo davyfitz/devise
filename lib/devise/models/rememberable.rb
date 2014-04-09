@@ -109,6 +109,9 @@ module Devise
 
         # Recreate the user based on the stored cookie
         def serialize_from_cookie(id, remember_token)
+          if id.is_a?(Array)  # Its in the form [{"$oid"=>"5345639a44617635ab010000"}]
+            id = id[0].values[0]
+          end
           record = to_adapter.get(id.to_s)
           record if record && !record.remember_expired? &&
                     Devise.secure_compare(record.rememberable_value, remember_token)
